@@ -3,11 +3,6 @@
 # Timezone
 ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 
-# Mount data volume.
-mkdir /data
-chmod a+rwx /data
-mount /dev/sdp /data
-
 #Using script from http://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_cloudwatch_logs.html
 # Install awslogs and the jq JSON parser
 yum install -y awslogs jq aws-cli
