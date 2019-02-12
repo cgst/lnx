@@ -21,7 +21,7 @@ data "aws_ecs_task_definition" "lnx" {
 
 resource "aws_ecs_service" "lnx" {
   name            = "lnx"
-  cluster         = "${module.ecs.cluster_id}"
+  cluster         = "${aws_ecs_cluster.lnx.id}"
   # Reference the latest task definition.
   task_definition = "${aws_ecs_task_definition.lnx.family}:${max("${aws_ecs_task_definition.lnx.revision}", "${data.aws_ecs_task_definition.lnx.revision}")}"
   desired_count   = 1
