@@ -53,43 +53,6 @@ resource "aws_eip_association" "host" {
   depends_on = ["aws_instance.host"]
 }
 
-resource "aws_security_group" "host" {
-  name        = "${var.environment}-host"
-  description = "Used in ${var.environment}"
-  vpc_id      = "${var.vpc_id}"
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "SSH"
-  }
-
-  ingress {
-    from_port   = 9735
-    to_port     = 9735
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "lnd peer connections"
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  tags {
-    Environment   = "${var.environment}"
-  }
-}
-
 data "template_file" "user_data" {
   template = "${file("${path.module}/templates/user_data.sh")}"
 
