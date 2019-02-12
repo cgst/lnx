@@ -35,5 +35,7 @@ data "template_file" "lnx_container_definitions" {
   vars {
     awslogs_region    = "${var.region}"
     awslogs_group     = "${aws_cloudwatch_log_group.lnx.name}"
+    ln_banner         = "${var.ln_banner}"
+    ln_color          = "${var.ln_color}"
   }
 }

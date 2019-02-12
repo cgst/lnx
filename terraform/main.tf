@@ -10,6 +10,7 @@ provider "aws" {
 module "us-east" {
   source = "lnx"
   region = "us-east-1"
+  ln_banner = "@cgst-US-East"
   availability_zones = ["us-east-1a", "us-east-1b"]
   environment = "${var.environment}"
   ssh_public_key = "${var.ssh_public_key}"

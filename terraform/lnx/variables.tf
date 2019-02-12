@@ -48,3 +48,9 @@ variable "public_subnet_cidrs" {
 variable "availability_zones" {
   type = "list"
 }
+
+variable "ln_color" {
+  default = "#FA7268"
+}
+
+variable "ln_banner" {}
