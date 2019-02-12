@@ -16,15 +16,16 @@ resource "aws_ecs_task_definition" "lnx" {
 
 data "aws_ecs_task_definition" "lnx" {
   task_definition = "${aws_ecs_task_definition.lnx.family}"
-  depends_on = ["aws_ecs_task_definition.lnx"]
+  depends_on      = ["aws_ecs_task_definition.lnx"]
 }
 
 resource "aws_ecs_service" "lnx" {
-  name            = "lnx"
-  cluster         = "${aws_ecs_cluster.lnx.id}"
+  name    = "lnx"
+  cluster = "${aws_ecs_cluster.lnx.id}"
+
   # Reference the latest task definition.
-  task_definition = "${aws_ecs_task_definition.lnx.family}:${max("${aws_ecs_task_definition.lnx.revision}", "${data.aws_ecs_task_definition.lnx.revision}")}"
-  desired_count   = 1
+  task_definition                    = "${aws_ecs_task_definition.lnx.family}:${max("${aws_ecs_task_definition.lnx.revision}", "${data.aws_ecs_task_definition.lnx.revision}")}"
+  desired_count                      = 1
   deployment_maximum_percent         = 100
   deployment_minimum_healthy_percent = 0
 }
@@ -33,9 +34,10 @@ data "template_file" "lnx_container_definitions" {
   template = "${file("${path.module}/templates/lnx_container_definitions.json")}"
 
   vars {
-    awslogs_region    = "${var.region}"
-    awslogs_group     = "${aws_cloudwatch_log_group.lnx.name}"
-    ln_banner         = "${var.ln_banner}"
-    ln_color          = "${var.ln_color}"
+    awslogs_region = "${var.region}"
+    awslogs_group  = "${aws_cloudwatch_log_group.lnx.name}"
+    ln_banner      = "${var.ln_banner}"
+    ln_color       = "${var.ln_color}"
+    external_ip    = "${module.host.host_external_ip}"
   }
 }

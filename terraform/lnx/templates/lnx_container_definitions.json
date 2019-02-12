@@ -64,7 +64,11 @@
       "--bitcoind.rpchost=bitcoind",
       "--bitcoind.rpcuser=OKToExposeRPCUser",
       "--bitcoind.rpcpass=OKToExposeRPCPassword",
-      "--bitcoind.zmqpath=tcp://bitcoind:28332"
+      "--bitcoind.zmqpath=tcp://bitcoind:28332",
+      "--externalip=${external_ip}",
+      "--autopilot.active",
+      "--autopilot.maxchannels=5",
+      "--autopilot.allocation=0.6"
     ],
     "environment": [
     ],
