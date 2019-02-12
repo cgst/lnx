@@ -23,6 +23,14 @@ variable "bitcoind_snapshot" {
   }
 }
 
+variable "lnd_snapshot" {
+  type = "map"
+  default = {
+    "us-east-1" = "snap-0a3dad16496e68a06"  # Empty ext4
+    "us-west-1" = "snap-0bc81c2b0cdde7248"  # Empty ext4
+  }
+}
+
 variable "vpc_cidr" {
   default = "10.0.0.0/16"
 }

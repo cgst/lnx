@@ -1,46 +1,16 @@
 resource "aws_ecs_task_definition" "lnx" {
   family = "lnx"
 
-  container_definitions = <<EOF
-[
-  {
-    "name": "bitcoind",
-    "image": "kylemanna/bitcoind",
-    "memoryReservation": 2048,
-    "essential": true,
-    "command": ["btc_oneshot", "-datadir=/bitcoind-data", "-txindex=1", "-rpcbind", "-rpcallowip=0.0.0.0/0", "-conf=/bitcoin/.bitcoin/bitcoin.conf"],
-    "environment": [
-      {"name": "RPCUSER", "value": "OKToExposeRPCUser"},
-      {"name": "RPCPASSWORD", "value": "OKToExposeRPCPassword"}
-    ],
-    "mountPoints": [
-      {
-        "sourceVolume": "bitcoind-data",
-        "containerPath": "/bitcoind-data"
-      }
-    ],
-    "portMappings": [
-        {
-            "containerPort": 8332,
-            "hostPort": 8332,
-            "protocol": "tcp"
-        }
-    ],
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-region": "${var.region}",
-        "awslogs-group": "${aws_cloudwatch_log_group.lnx.name}",
-        "awslogs-stream-prefix": "bitcoind"
-      }
-    }
-  }
-]
-EOF
+  container_definitions = "${data.template_file.lnx_container_definitions.rendered}"
 
   volume {
-    name      = "bitcoind-data"
-    host_path = "/data/bitcoind"
+    name      = "data-bitcoind"
+    host_path = "/data-bitcoind/bitcoind"
+  }
+
+  volume {
+    name      = "data-lnd"
+    host_path = "/data-lnd"
   }
 }
 
@@ -57,4 +27,13 @@ resource "aws_ecs_service" "lnx" {
   desired_count   = 1
   deployment_maximum_percent         = 100
   deployment_minimum_healthy_percent = 0
+}
+
+data "template_file" "lnx_container_definitions" {
+  template = "${file("${path.module}/templates/lnx_container_definitions.json")}"
+
+  vars {
+    awslogs_region    = "${var.region}"
+    awslogs_group     = "${aws_cloudwatch_log_group.lnx.name}"
+  }
 }
