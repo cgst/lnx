@@ -1,0 +1,3 @@
+locals {
+  cloudwatch_prefix = ""
+}
