@@ -57,7 +57,7 @@ variable "private_subnet_ids" {
 variable "load_balancers" {
   type        = "list"
   default     = []
-  description = "The load balancers to couple to the instances. Only used when NOT using ALB"
+  description = "The load balancers to couple to the instances"
 }
 
 variable "depends_id" {

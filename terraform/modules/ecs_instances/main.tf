@@ -26,7 +26,7 @@ resource "aws_security_group_rule" "outbound_internet_access" {
   security_group_id = "${aws_security_group.instance.id}"
 }
 
-# Default disk size for Docker is 22 gig, see http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html
+# Default disk size for Docker is 22GB, see http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html
 resource "aws_launch_configuration" "launch" {
   name_prefix          = "${var.environment}_${var.instance_group}_"
   image_id             = "${var.aws_ami}"
@@ -36,8 +36,9 @@ resource "aws_launch_configuration" "launch" {
   iam_instance_profile = "${var.iam_instance_profile_id}"
   key_name             = "${var.key_name}"
   ebs_block_device {
-    device_name = "/dev/sdp"
-    snapshot_id = "${var.ebs_snapshot_id}"
+    device_name           = "/dev/sdp"
+    snapshot_id           = "${var.ebs_snapshot_id}"
+    delete_on_termination = false
   }
 
   # aws_launch_configuration can not be modified.

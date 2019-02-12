@@ -1,7 +1,3 @@
-output "default_alb_target_group" {
-  value = "${module.alb.default_alb_target_group}"
-}
-
 output "vpc_id" {
   value = "${module.network.vpc_id}"
 }
@@ -16,4 +12,8 @@ output "vpc_public_subnet_ids" {
 
 output "cluster_id" {
   value = "${aws_ecs_cluster.cluster.id}"
+}
+
+output "internet_gateway_id" {
+  value = "${module.network.internet_gateway_id}"
 }
