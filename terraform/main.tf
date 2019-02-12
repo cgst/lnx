@@ -8,13 +8,14 @@ provider "aws" {
 }
 
 module "us-east" {
-  source = "lnx"
-  region = "us-east-1"
-  ln_banner = "@cgst-US-East"
-  availability_zones = ["us-east-1a", "us-east-1b"]
-  environment = "${var.environment}"
-  ssh_public_key = "${var.ssh_public_key}"
+  source                  = "lnx"
+  region                  = "us-east-1"
+  ln_banner               = "1.ln.glass"
+  availability_zones      = ["us-east-1a", "us-east-1b"]
+  environment             = "${var.environment}"
+  ssh_public_key          = "${var.ssh_public_key}"
   iam_instance_profile_id = "${aws_iam_instance_profile.ecs.id}"
+  public_hostname         = "1.ln.glass"
 }
 
 //module "us-west" {
@@ -29,5 +30,3 @@ module "us-east" {
 //  iam_instance_profile_id = "${aws_iam_instance_profile.ecs.id}"
 //}
 
-variable "environment" {}
-variable "ssh_public_key" {}

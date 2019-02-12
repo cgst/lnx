@@ -54,3 +54,5 @@ variable "ln_color" {
 }
 
 variable "ln_banner" {}
+
+variable "public_hostname" {}
