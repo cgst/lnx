@@ -8,7 +8,7 @@ resource "aws_instance" "host" {
     "${aws_security_group.host.id}"]
   monitoring = true
   user_data = "${data.template_file.user_data.rendered}"
-  disable_api_termination = true
+  disable_api_termination = false
   iam_instance_profile = "${var.iam_instance_profile_id}"
 
   ebs_block_device {

@@ -37,7 +37,7 @@ resource "aws_security_group" "bastion" {
   }
 }
 
-# Allow SSH access to lnx host from bastion.
+# Allow SSH access to lnx hosts from bastion.
 resource "aws_security_group_rule" "inbound_ssh_access_from_bastion" {
   type                     = "ingress"
   from_port                = 22
