@@ -12,15 +12,6 @@ resource "aws_security_group" "host" {
   }
 }
 
-resource "aws_security_group_rule" "outbound_internet_access" {
-  security_group_id = "${aws_security_group.host.id}"
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-}
-
 resource "aws_security_group_rule" "inbound_lnd_access_from_world" {
   security_group_id = "${aws_security_group.host.id}"
   type              = "ingress"
