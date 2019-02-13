@@ -46,5 +46,5 @@ variable "ecs_logging" {
 
 variable "ebs_a_snapshot_id" {}
 variable "ebs_b_snapshot_id" {}
-
+variable "depends_id" {}
 variable "internet_gateway_id" {}

@@ -11,7 +11,7 @@ module "host" {
   source      = "host"
   environment = "${var.environment}"
 
-  instance_type           = "m5a.large"
+  instance_type           = "${var.instance_type}"
   cluster                 = "${aws_ecs_cluster.lnx.id}"
   vpc_id                  = "${module.network.vpc_id}"
   aws_ami                 = "${lookup(var.ecs_ami, var.region)}"
@@ -22,6 +22,7 @@ module "host" {
   subnet_id               = "${module.network.public_subnet_ids[0]}"
   internet_gateway_id     = "${module.network.internet_gateway_id}"
   cloudwatch_prefix       = "${local.cloudwatch_prefix}"
+  depends_id              = "${module.network.depends_id}"  # Required to ensure internet connectivity is available at boot time
 }
 
 module "network" {
