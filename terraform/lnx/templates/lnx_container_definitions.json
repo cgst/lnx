@@ -67,8 +67,8 @@
       "--bitcoind.zmqpath=tcp://bitcoind:28332",
       "--externalip=${external_ip}",
       "--autopilot.active",
-      "--autopilot.maxchannels=5",
-      "--autopilot.allocation=0.6"
+      "--autopilot.maxchannels=100",
+      "--autopilot.allocation=0.9"
     ],
     "environment": [
     ],
