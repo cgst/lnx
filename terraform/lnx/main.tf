@@ -12,7 +12,7 @@ module "host" {
   environment = "${var.environment}"
 
   instance_type           = "${var.instance_type}"
-  cluster                 = "${aws_ecs_cluster.lnx.id}"
+  cluster_name            = "${aws_ecs_cluster.lnx.name}"
   vpc_id                  = "${module.network.vpc_id}"
   aws_ami                 = "${lookup(var.ecs_ami, var.region)}"
   ebs_a_snapshot_id       = "${lookup(var.bitcoind_snapshot, var.region)}"

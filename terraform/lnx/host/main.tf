@@ -40,6 +40,10 @@ resource "aws_instance" "host" {
     # For info why see description in the network module.
     DependsId = "${var.depends_id}"
   }
+
+  lifecycle {
+    ignore_changes = ["user_data"]
+  }
 }
 
 resource "aws_eip" "host" {
@@ -62,7 +66,7 @@ data "template_file" "user_data" {
   vars {
     ecs_config = "${var.ecs_config}"
     ecs_logging = "${var.ecs_logging}"
-    cluster_name = "${var.cluster}"
+    cluster_name = "${var.cluster_name}"
     env_name = "${var.environment}"
     custom_userdata = <<EOF
         mkdir /data-{bitcoind,lnd}
