@@ -12,7 +12,7 @@
       "-rpcallowip=0.0.0.0/0",
       "-conf=/bitcoin/.bitcoin/bitcoin.conf",
       "-zmqpubrawblock=tcp://0.0.0.0:28332",
-      "-zmqpubrawtx=tcp://0.0.0.0:28332"
+      "-zmqpubrawtx=tcp://0.0.0.0:28333"
     ],
     "environment": [
       {"name": "RPCUSER", "value": "OKToExposeRPCUser"},
@@ -34,6 +34,11 @@
         "containerPort": 28332,
         "hostPort": 28332,
         "protocol": "tcp"
+      },
+      {
+        "containerPort": 28333,
+        "hostPort": 28333,
+        "protocol": "tcp"
       }
     ],
     "logConfiguration": {
@@ -47,7 +52,7 @@
   },
   {
     "name": "lnd",
-    "image": "lightninglabs/lnd",
+    "image": "cgst/lnd:latest",
     "memoryReservation": 2048,
     "essential": true,
     "command": [
@@ -64,11 +69,9 @@
       "--bitcoind.rpchost=bitcoind",
       "--bitcoind.rpcuser=OKToExposeRPCUser",
       "--bitcoind.rpcpass=OKToExposeRPCPassword",
-      "--bitcoind.zmqpath=tcp://bitcoind:28332",
-      "--externalip=${external_ip}",
-      "--autopilot.active",
-      "--autopilot.maxchannels=100",
-      "--autopilot.allocation=0.9"
+      "--bitcoind.zmqpubrawblock=tcp://bitcoind:28332",
+      "--bitcoind.zmqpubrawtx=tcp://bitcoind:28333",
+      "--externalip=${external_ip}"
     ],
     "environment": [
     ],
